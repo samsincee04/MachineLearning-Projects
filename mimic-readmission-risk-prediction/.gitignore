@@ -1,0 +1,18 @@
+# Jupyter / Python
+.ipynb_checkpoints/
+__pycache__/
+*.pyc
+
+# Data / large artifacts (do not commit)
+*.csv
+*.csv.gz
+*.parquet
+*.zip
+*.npz
+*.joblib
+*.json
+*.keras
+*.h5
+
+# OS
+.DS_Store
