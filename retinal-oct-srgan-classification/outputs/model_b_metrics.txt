@@ -1,0 +1,22 @@
+Model B Results
+===============
+Test Accuracy: 0.8459
+Test F1 Score: 0.8449
+Test AUC: 0.9523
+
+Predicted class counts:
+[336 417]
+
+True class counts:
+[422 331]
+
+Classification Report
+=====================
+              precision    recall  f1-score   support
+
+      NORMAL       0.96      0.76      0.85       422
+         DME       0.76      0.95      0.84       331
+
+    accuracy                           0.85       753
+   macro avg       0.86      0.86      0.85       753
+weighted avg       0.87      0.85      0.85       753

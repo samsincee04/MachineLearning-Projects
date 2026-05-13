@@ -1,0 +1,16 @@
+Model A Fine-Tuned Results
+==========================
+Test Accuracy: 0.9097
+Test F1 Score: 0.8896
+Test AUC: 0.9653
+
+Classification Report
+=====================
+              precision    recall  f1-score   support
+
+      NORMAL       0.88      0.97      0.92       422
+         DME       0.96      0.83      0.89       331
+
+    accuracy                           0.91       753
+   macro avg       0.92      0.90      0.91       753
+weighted avg       0.91      0.91      0.91       753

@@ -1,0 +1,16 @@
+Final Model Comparison
+======================
+
+Model A Accuracy: 0.5750
+Model A F1:       0.0698
+Model A AUC:      0.6873
+
+Model B Accuracy: 0.8459
+Model B F1:       0.8449
+Model B AUC:      0.9523
+
+Improvement (Model B - Model A)
+===============================
+Accuracy gain: 0.2709
+F1 gain:       0.7751
+AUC gain:      0.2650

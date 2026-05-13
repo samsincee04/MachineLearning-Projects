@@ -1,0 +1,11 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Large trained model files
+*.keras
+*.h5
+*.ckpt
