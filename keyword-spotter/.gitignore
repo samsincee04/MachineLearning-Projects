@@ -1,0 +1,27 @@
+# Dataset / env
+dataset/
+.venv/
+
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+
+# Generated model artifacts
+*.h5
+*.keras
+*.tflite
+*.npy
+
+# ESP-IDF generated
+embedded/build/
+embedded/managed_components/
+embedded/sdkconfig.old
+
+# Training generated outputs
+training/*.png
+training/tpr_fpr_runs_*.csv
+training/__pycache__/
+training/.DS_Store

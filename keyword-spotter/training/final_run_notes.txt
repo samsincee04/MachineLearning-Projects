@@ -1,0 +1,54 @@
+Passing run timestamp: 13apr2026_180404
+
+Dataset counts:
+- cat: 125
+- spottieottie: 125
+- unknown_words: 60
+- noise: 10
+- synthetic silence added in pipeline
+
+Labels:
+- _silence
+- _unknown
+- cat
+- spottieottie
+
+Preprocessing:
+- sample rate: 16000 Hz
+- target duration: 1.0 s
+- spoken-word folders trimmed for silence
+- noise folder not trimmed
+- pad/trim to 16000 samples
+- normalization applied
+
+Training settings:
+- window_size_ms = 64
+- window_step_ms = 48
+- num_filters = 32
+- wave_length_ms = 1000
+- batch_size = 32
+- time_shift_max_samples = 480
+- optimizer = Adam(1e-3)
+- epochs = 25
+- early stopping on val_accuracy, patience=5, restore_best_weights=True
+
+Augmentation:
+- training-only time shift
+- noisy reps of known = [0.05, 0.1, 0.15, 0.2]
+- synthetic silence generation
+
+Model:
+- Conv2D(16) + BN + MaxPool + Dropout(0.2)
+- Conv2D(32) + BN + MaxPool + Dropout(0.2)
+- Conv2D(64) + BN + Dropout(0.3)
+- GlobalAveragePooling2D
+- Dense(32, relu) + Dropout(0.3)
+- Dense(4 logits)
+
+Passing metrics:
+- test accuracy = 0.7949
+- TPR_cat = 0.8462
+- FPR_cat = 0.1923
+- TPR_spottieottie = 1.0000
+- FPR_spottieottie = 0.0769
+- TARGET = PASS

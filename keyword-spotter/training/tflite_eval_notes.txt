@@ -1,0 +1,36 @@
+TFLite evaluation (evaluate_tflite.py), same session as terminal log
+
+Interpreter summary:
+- Float model: input float32, shape [1, 20, 32, 1]; output float32 logits [1, 4]; quantization (0, 0).
+- INT8 model: input int8, scale ~0.00392, zero_point -128; output int8, scale ~0.04264, zero_point -32.
+
+Accuracy:
+- Float TFLite accuracy: 0.8718
+- INT8 TFLite accuracy: 0.1795
+
+Predicted label counts (test set, N = 39):
+- Float: {'_silence': 6, '_unknown': 4, 'backward': 17, 'spottieottie': 12}
+- INT8: {'_silence': 39, '_unknown': 0, 'backward': 0, 'spottieottie': 0}
+
+Observation:
+- INT8 predicted everything as _silence (collapse to class index 0); float model predictions look reasonable on the same inputs.
+- Suggests full integer quantization hurt this small KWS model; consider float fallback on device, more rep data, QAT, or per-channel/weight-only approaches.
+
+---
+
+Project notes (later run — representative data / conversion path fixed):
+
+- Quantized TFLite conversion initially failed, with the INT8 model collapsing to _silence.
+- After correcting the representative-data-based conversion path, the regenerated INT8 model matched float TFLite performance.
+- Final Python-side TFLite results:
+  - float TFLite accuracy = 0.9487
+  - INT8 TFLite accuracy = 0.9487
+
+Full evaluate_tflite.py output (float + dynamic-range + INT8, same test set):
+
+- Float TFLite accuracy: 0.9487
+- Dynamic-range TFLite accuracy: 0.9487
+- INT8 TFLite accuracy: 0.9487
+- Float predicted counts: {'_silence': 8, '_unknown': 7, 'backward': 12, 'spottieottie': 12}
+- Dynamic predicted counts: {'_silence': 8, '_unknown': 7, 'backward': 12, 'spottieottie': 12}
+- INT8 predicted counts: {'_silence': 8, '_unknown': 7, 'backward': 12, 'spottieottie': 12}

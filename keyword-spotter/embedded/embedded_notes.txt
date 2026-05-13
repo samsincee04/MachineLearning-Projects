@@ -1,0 +1,60 @@
+labels:
+- _silence
+- _unknown
+- backward
+- spottieottie
+
+input shape:
+- (20, 32, 1)
+
+audio / feature settings:
+- wave_length_ms = 1000
+- window_size_ms = 64
+- window_step_ms = 48
+- num_filters = 32
+
+likely ops:
+- Conv2D
+- MaxPool2D
+- FullyConnected
+- Reshape
+- Softmax
+
+Embedded integration completed:
+- duplicated micro_speech into micro_speech_spottie
+- added new project to root CMakeLists.txt
+- updated copied CMakeLists.txt project references
+- patched micro_utils.h with #include <limits> for toolchain compatibility
+- replaced default model bytes in micro_features/model.cpp with INT8 TFLite model
+- updated g_model_len to match converted model
+- updated kCategoryLabels to:
+  _silence, _unknown, backward, spottieottie
+- updated feature settings in micro_model_settings.h:
+  kMaxAudioSampleSize = 1024
+  kFeatureSliceSize = 32
+  kFeatureSliceCount = 20
+  kFeatureSliceStrideMs = 48
+  kFeatureSliceDurationMs = 64
+- updated main_functions.cpp:
+  - MicroMutableOpResolver<5>
+  - AddConv2D
+  - AddMaxPool2D
+  - AddFullyConnected
+  - AddReshape
+  - AddSoftmax
+  - changed input tensor check to 4D int8 input:
+    [1, 20, 32, 1]
+- successfully built:
+  examples/micro_speech_spottie/micro_speech_spottie.elf
+
+Working I2S capture baseline (test that matched expected audio behavior; keep future changes
+aligned with this unless you intentionally replace it):
+- #include "driver/i2s_std.h"
+- I2S_NUM_0
+- sample rate 16000 Hz
+- 32-bit per slot (read buffer in int32_t)
+- example-style "left only" implemented as: stereo slot mode, left slot selected
+  (I2S_STD_PHILIPS_SLOT_DEFAULT_CONFIG(32BIT, STEREO) + slot_mask = I2S_STD_SLOT_LEFT)
+- int16_t PCM: Right-shift raw int32 by 14 (>> 14) for rescale
+- pin mapping that worked in this test:
+  BCK  = GPIO 41, WS = GPIO 42, DIN = GPIO 2
